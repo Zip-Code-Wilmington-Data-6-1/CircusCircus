@@ -102,20 +102,29 @@ def viewpost():
 	comments = Comment.query.filter(Comment.post_id == postid).order_by(Comment.id.desc()) # no need for scalability now
 	return render_template("viewpost.html", post=post, path=subforumpath, comments=comments)
 
+
 @login_required
-@rt.route('/action_comment', methods=['POST', 'GET'])
-def comment():
-	post_id = int(request.args.get("post"))
+@rt.route('/action_react', methods=['POST'])
+def action_react():
+	post_id = int(request.form.get('post_id'))
+	emoji = request.form.get('emoji')
 	post = Post.query.filter(Post.id == post_id).first()
 	if not post:
 		return error("That post does not exist!")
-	content = request.form['content']
-	postdate = datetime.datetime.now()
-	comment = Comment(content, postdate)
-	current_user.comments.append(comment)
-	post.comments.append(comment)
-	db.session.commit()
-	return redirect("/viewpost?post=" + str(post_id))
+	# Check if user already reacted with this emoji
+	from forum.models import Reaction
+	existing = Reaction.query.filter_by(user_id=current_user.id, post_id=post_id, emoji=emoji).first()
+	if existing:
+		# Remove reaction (toggle off)
+		db.session.delete(existing)
+		db.session.commit()
+		return {'status': 'removed'}
+	else:
+		# Add reaction
+		reaction = Reaction(emoji=emoji, user_id=current_user.id, post_id=post_id)
+		db.session.add(reaction)
+		db.session.commit()
+		return {'status': 'added'}
 
 @login_required
 @rt.route('/action_post', methods=['POST'])
@@ -145,3 +154,17 @@ def action_post():
 	db.session.commit()
 	return redirect("/viewpost?post=" + str(post.id))
 
+@login_required
+@rt.route('/action_comment', methods=['POST', 'GET'])
+def action_comment():
+	post_id = int(request.args.get("post"))
+	post = Post.query.filter(Post.id == post_id).first()
+	if not post:
+		return error("That post does not exist!")
+	content = request.form['content']
+	postdate = datetime.datetime.now()
+	comment = Comment(content, postdate)
+	current_user.comments.append(comment)
+	post.comments.append(comment)
+	db.session.commit()
+	return redirect("/viewpost?post=" + str(post_id))

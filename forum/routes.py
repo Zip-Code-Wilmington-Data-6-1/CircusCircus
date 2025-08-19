@@ -102,20 +102,20 @@ def viewpost():
 	comments = Comment.query.filter(Comment.post_id == postid).order_by(Comment.id.desc()) # no need for scalability now
 	return render_template("viewpost.html", post=post, path=subforumpath, comments=comments)
 
-@login_required
-@rt.route('/action_comment', methods=['POST', 'GET'])
-def comment():
-	post_id = int(request.args.get("post"))
-	post = Post.query.filter(Post.id == post_id).first()
-	if not post:
-		return error("That post does not exist!")
-	content = request.form['content']
-	postdate = datetime.datetime.now()
-	comment = Comment(content, postdate)
-	current_user.comments.append(comment)
-	post.comments.append(comment)
-	db.session.commit()
-	return redirect("/viewpost?post=" + str(post_id))
+# @login_required
+# @rt.route('/action_comment', methods=['POST', 'GET'])
+# def comment():
+# 	post_id = int(request.args.get("post"))
+# 	post = Post.query.filter(Post.id == post_id).first()
+# 	if not post:
+# 		return error("That post does not exist!")
+# 	content = request.form['content']
+# 	postdate = datetime.datetime.now()
+# 	comment = Comment(content, postdate)
+# 	current_user.comments.append(comment)
+# 	post.comments.append(comment)
+# 	db.session.commit()
+# 	return redirect("/viewpost?post=" + str(post_id))
 
 @login_required
 @rt.route('/action_post', methods=['POST'])

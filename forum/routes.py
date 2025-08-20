@@ -107,8 +107,6 @@ def viewpost():
 	return render_template("viewpost.html", post=post, path=subforumpath, comments=comments)
 
 
-
-
 @login_required
 @rt.route('/action_post', methods=['POST'])
 def action_post():

@@ -6,11 +6,15 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from forum.models import User, Post, Comment, Subforum, valid_content, valid_title, db, generateLinkPath, error
 from forum.user import username_taken, email_taken, valid_username
 
+
 ##
 # This file needs to be broken up into several, to make the project easier to work on.
 ##
 
 rt = Blueprint('routes', __name__, template_folder='templates')
+
+
+
 
 @rt.route('/action_login', methods=['POST'])
 def action_login():

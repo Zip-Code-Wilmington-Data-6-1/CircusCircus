@@ -4,7 +4,7 @@ from flask_login.utils import login_required
 import datetime
 from flask import Blueprint, render_template, request, redirect, url_for
 from forum.models import User, Post, Comment, Subforum, valid_content, valid_title, db, generateLinkPath, error
-from forum.user import username_taken, email_taken, valid_username
+from forum.user import username_taken, email_taken, valid_username, valid_password, valid_email
 
 ##
 # This file needs to be broken up into several, to make the project easier to work on.
@@ -40,23 +40,36 @@ def action_createaccount():
 	email = request.form['email']
 	errors = []
 	retry = False
+	
+	# Validate email format
+	if not valid_email(email):
+		errors.append("Invalid email format!")
+		retry = True
+	elif email_taken(email):
+		errors.append("An account already exists with this email!")
+		retry = True
+	
+	# Validate username
 	if username_taken(username):
 		errors.append("Username is already taken!")
 		retry=True
-	if email_taken(email):
-		errors.append("An account already exists with this email!")
+	elif not valid_username(username):
+		errors.append("Username must be 4-40 characters and contain only letters, numbers, and !@#%&")
 		retry = True
-	if not valid_username(username):
-		errors.append("Username is not valid!")
+	
+	# Validate password
+	if not valid_password(password):
+		errors.append("Password must be 6-40 characters and contain only letters, numbers, and !@#%&")
 		retry = True
-	# if not valid_password(password):
-	# 	errors.append("Password is not valid!")
-	# 	retry = True
+	
 	if retry:
 		return render_template("login.html", errors=errors)
+	
+	# Create user with enhanced functionality
 	user = User(email, username, password)
-	if user.username == "admin":
+	if user.username.lower() == "admin":
 		user.admin = True
+	
 	db.session.add(user)
 	db.session.commit()
 	login_user(user)
@@ -128,6 +141,8 @@ def action_post():
 	user = current_user
 	title = request.form['title']
 	content = request.form['content']
+	is_public = request.form.get('is_public', 'true').lower() == 'true'  # Default to public
+	
 	#check for valid posting
 	errors = []
 	retry = False
@@ -139,7 +154,8 @@ def action_post():
 		retry = True
 	if retry:
 		return render_template("createpost.html",subforum=subforum,  errors=errors)
-	post = Post(title, content, datetime.datetime.now())
+	
+	post = Post(title, content, datetime.datetime.now(), is_public)
 	subforum.posts.append(post)
 	user.posts.append(post)
 	db.session.commit()

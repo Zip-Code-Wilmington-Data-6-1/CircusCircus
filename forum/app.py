@@ -1,10 +1,18 @@
-
-from flask import render_template
+from flask import render_template, Flask
 from flask_login import LoginManager
 from forum.models import Subforum, db, User
+from forum.posts import posts_bp
+from forum.routes import rt
+from forum.reactions import reactions_bp
 
-from . import create_app
-app = create_app()
+app = Flask(__name__)
+app.secret_key = 'replace-this-with-a-very-secret-key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/circuscircus.db'
+db.init_app(app)
+
+app.register_blueprint(posts_bp)
+app.register_blueprint(rt)
+app.register_blueprint(reactions_bp)
 
 app.config['SITE_NAME'] = 'Schooner'
 app.config['SITE_DESCRIPTION'] = 'a schooner forum'
@@ -43,7 +51,7 @@ def load_user(userid):
 	return User.query.get(userid)
 
 with app.app_context():
-	db.create_all() # TODO this may be redundant
+	db.create_all()
 	if not Subforum.query.all():
 		init_site()
 
@@ -51,6 +59,7 @@ with app.app_context():
 def index():
 	subforums = Subforum.query.filter(Subforum.parent_id == None).order_by(Subforum.id)
 	return render_template("subforums.html", subforums=subforums)
+
 
 
 

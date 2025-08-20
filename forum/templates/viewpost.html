@@ -7,7 +7,6 @@
 		<a href="/viewpost?post={{ post.id }}">{{post.title}}</a>
 		<div class="postposter" {% if post.user.admin %} style="color: red;" {% endif %}>
 			{{ post.user.username }}
-
 		</div>
 		<div class="posttime">
 			{{ post.get_time_string() }}
@@ -16,7 +15,16 @@
 	<div class="postcontent">
 		{{post.content}}
 	</div>
-
+	<div class="postreactions" style="margin-top: 1em;">
+		<b>Reactions:</b>
+		{% set emojis = ['👍', '❤️', '😂', '😮', '😢', '👎'] %}
+		{% for emoji in emojis %}
+			{% set count = post.reactions|selectattr('emoji', 'equalto', emoji)|list|length %}
+			<button class="reaction-btn" data-emoji="{{ emoji }}" data-postid="{{ post.id }}">
+				{{ emoji }} <span class="reaction-count">{{ count }}</span>
+			</button>
+		{% endfor %}
+	</div>
 </div>
 <div class="addcomment" id="addcomment">
 	<form action="/action_comment?post={{ post.id }}" method="POST">
@@ -56,6 +64,7 @@
 {% endfor %}
 </div>
 {% endif %}
+
 <script type="text/javascript">
 function toggle(){
 	var div = document.getElementById("addcomment");
@@ -67,8 +76,29 @@ function toggle(){
 		div.style.display = "none";
 		button.value="Add a comment"
 	}
-	
 }
+
+// Emoji reaction AJAX handler
+document.addEventListener('DOMContentLoaded', function() {
+	document.querySelectorAll('.reaction-btn').forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			var emoji = this.getAttribute('data-emoji');
+			var postid = this.getAttribute('data-postid');
+			fetch('/action_react', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: 'emoji=' + encodeURIComponent(emoji) + '&post_id=' + encodeURIComponent(postid)
+			})
+			.then(response => response.json())
+			.then(data => {
+				// Reload the page to update counts (simple approach)
+				location.reload();
+			});
+		});
+	});
+});
 </script>
 
 

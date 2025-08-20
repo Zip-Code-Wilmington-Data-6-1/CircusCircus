@@ -107,28 +107,7 @@ def viewpost():
 	return render_template("viewpost.html", post=post, path=subforumpath, comments=comments)
 
 
-@login_required
-@rt.route('/action_react', methods=['POST'])
-def action_react():
-	post_id = int(request.form.get('post_id'))
-	emoji = request.form.get('emoji')
-	post = Post.query.filter(Post.id == post_id).first()
-	if not post:
-		return error("That post does not exist!")
-	# Check if user already reacted with this emoji
-	from forum.models import Reaction
-	existing = Reaction.query.filter_by(user_id=current_user.id, post_id=post_id, emoji=emoji).first()
-	if existing:
-		# Remove reaction (toggle off)
-		db.session.delete(existing)
-		db.session.commit()
-		return {'status': 'removed'}
-	else:
-		# Add reaction
-		reaction = Reaction(emoji=emoji, user_id=current_user.id, post_id=post_id)
-		db.session.add(reaction)
-		db.session.commit()
-		return {'status': 'added'}
+
 
 @login_required
 @rt.route('/action_post', methods=['POST'])

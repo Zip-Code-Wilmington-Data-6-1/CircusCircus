@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from forum.models import Subforum, db, User
 from forum.posts import posts_bp
 from forum.routes import rt
+from forum.reactions import reactions_bp
 
 app = Flask(__name__)
 app.secret_key = 'replace-this-with-a-very-secret-key'
@@ -11,6 +12,7 @@ db.init_app(app)
 
 app.register_blueprint(posts_bp)
 app.register_blueprint(rt)
+app.register_blueprint(reactions_bp)
 
 app.config['SITE_NAME'] = 'Schooner'
 app.config['SITE_DESCRIPTION'] = 'a schooner forum'

@@ -57,7 +57,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
-<<<<<<< Updated upstream
+
     def get_full_name(self):
         """Return the user's full name if available, otherwise username"""
         if self.first_name and self.last_name:
@@ -91,7 +91,6 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
     
-=======
     # New Methods 
     # Flask-Login requires these methods for user management
     def get_id(self):
@@ -125,7 +124,6 @@ class Reaction(db.Model):
     user = db.relationship('User', backref='reactions')
     post = db.relationship('Post', backref='reactions')
 
->>>>>>> Stashed changes
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)

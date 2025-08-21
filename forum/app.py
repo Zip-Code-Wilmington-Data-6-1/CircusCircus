@@ -2,14 +2,39 @@
 from flask import render_template
 from flask_login import LoginManager
 from forum.models import Subforum, db, User
+<<<<<<< Updated upstream
 
 from . import create_app
 app = create_app()
+=======
+from forum.posts import posts_bp
+from forum.routes import rt
+from forum.reactions import reactions_bp
+from forum.comments import comments_bp
+from forum.auth import auth_bp
+
+app = Flask(__name__)
+app.secret_key = 'replace-this-with-a-very-secret-key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/circuscircus.db'
+db.init_app(app)
+
+app.register_blueprint(posts_bp)
+app.register_blueprint(rt)
+app.register_blueprint(reactions_bp)
+
+app.register_blueprint(comments_bp)
+app.register_blueprint(auth_bp)  # 🔥 ADD THIS LINE
+
+>>>>>>> Stashed changes
 
 app.config['SITE_NAME'] = 'Schooner'
 app.config['SITE_DESCRIPTION'] = 'a schooner forum'
 app.config['FLASK_DEBUG'] = 1
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 def init_site():
 	print("creating initial subforums")
 	admin = add_subforum("Forum", "Announcements, bug reports, and general discussion about the forum belongs here")

@@ -57,6 +57,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+<<<<<<< Updated upstream
     def get_full_name(self):
         """Return the user's full name if available, otherwise username"""
         if self.first_name and self.last_name:
@@ -90,6 +91,41 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
     
+=======
+    # New Methods 
+    # Flask-Login requires these methods for user management
+    def get_id(self):
+         return str(self.id)
+    
+    @property
+    def is_authenticated(self):
+        """Check if user is authenticated"""
+        return True
+    
+    @property
+    def is_active(self):
+        """Check if user is active"""
+        return True
+    
+    
+    @property
+    def is_anonymous(self):
+        """Check if user is anonymous"""
+        return False
+
+
+
+
+# Emoji Reaction model
+class Reaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    emoji = db.Column(db.String(16), nullable=False)  # e.g. 'like', 'heart', 'smile', or even the emoji itself
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user = db.relationship('User', backref='reactions')
+    post = db.relationship('Post', backref='reactions')
+
+>>>>>>> Stashed changes
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)

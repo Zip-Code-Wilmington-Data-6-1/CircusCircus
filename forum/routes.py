@@ -1,18 +1,10 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import current_user #login_user, logout_user
+from flask_login import current_user, login_user, logout_user  # Uncomment login_user
 from flask_login.utils import login_required
 import datetime
 from flask import Blueprint, render_template, request, redirect, url_for
 from forum.models import User, Post, Comment, Subforum, valid_content, valid_title, db, generateLinkPath, error
-
 from forum.user import username_taken, email_taken, valid_username, valid_password, valid_email
-
-# from forum.user import username_taken, email_taken, valid_username
-
-
-##
-# This file needs to be broken up into several, to make the project easier to work on.
-##
 
 rt = Blueprint('routes', __name__, template_folder='templates')
 
@@ -22,12 +14,12 @@ def action_login():
 	password = request.form['password']
 	user = User.query.filter(User.username == username).first()
 	if user and user.check_password(password):
-		login_user(user)
+		login_user(user)  # This will now work
+		return redirect("/")
 	else:
 		errors = []
 		errors.append("Username or password is incorrect!")
 		return render_template("login.html", errors=errors)
-	return redirect("/")
 
 
 
@@ -137,9 +129,9 @@ def subforum():
 	subforums = Subforum.query.filter(Subforum.parent_id == subforum_id).all()
 	return render_template("subforum.html", subforum=subforum, posts=posts, subforums=subforums, path=subforumpath)
 
-# @rt.route('/loginform')
-# def loginform():
-# 	return render_template("login.html")
+@rt.route('/loginform')
+def loginform():
+	return render_template("login.html")
 
 
 @login_required

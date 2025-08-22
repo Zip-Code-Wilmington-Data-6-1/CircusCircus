@@ -137,6 +137,22 @@ def action_post():
 	db.session.commit()
 	return redirect("/viewpost?post=" + str(post.id))
 
+
+@login_required
+@rt.route('/delete_post', methods=['POST'])
+def delete_post():
+    post_id = int(request.form.get('post_id'))
+    post = Post.query.get(post_id)
+    if not post:
+        return redirect('/')
+    # Only allow author or admin to delete
+    if not current_user.is_authenticated or (current_user.id != post.user.id and not current_user.admin):
+        return "Unauthorized", 403
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/')
+
+
 # @login_required
 # @rt.route('/action_comment', methods=['POST', 'GET'])
 # def action_comment():

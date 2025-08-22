@@ -15,7 +15,7 @@ rt = Blueprint('routes', __name__, template_folder='templates')
 
 
 
-
+'''
 @rt.route('/action_login', methods=['POST'])
 def action_login():
 	username = request.form['username']
@@ -65,7 +65,7 @@ def action_createaccount():
 	db.session.commit()
 	login_user(user)
 	return redirect("/")
-
+'''
 
 @rt.route('/subforum')
 def subforum():
@@ -80,10 +80,12 @@ def subforum():
 	subforums = Subforum.query.filter(Subforum.parent_id == subforum_id).all()
 	return render_template("subforum.html", subforum=subforum, posts=posts, subforums=subforums, path=subforumpath)
 
+
+'''
 @rt.route('/loginform')
 def loginform():
 	return render_template("login.html")
-
+'''
 
 @login_required
 @rt.route('/addpost')

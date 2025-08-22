@@ -1,10 +1,11 @@
-
 from flask import render_template, Flask
 from flask_login import LoginManager
 from forum.models import Subforum, db, User
 from forum.posts import posts_bp
 from forum.routes import rt
 from forum.reactions import reactions_bp
+from forum.comments import comments_bp
+from forum.auth import auth_bp  # Add this import
 
 app = Flask(__name__)
 app.secret_key = 'replace-this-with-a-very-secret-key'
@@ -14,13 +15,12 @@ db.init_app(app)
 app.register_blueprint(posts_bp)
 app.register_blueprint(rt)
 app.register_blueprint(reactions_bp)
-
+app.register_blueprint(comments_bp)
+app.register_blueprint(auth_bp)  
 
 app.config['SITE_NAME'] = 'Schooner'
 app.config['SITE_DESCRIPTION'] = 'a schooner forum'
 app.config['FLASK_DEBUG'] = 1
-
-app.register_blueprint(comments_bp)
 
 def init_site():
     print("creating initial subforums")

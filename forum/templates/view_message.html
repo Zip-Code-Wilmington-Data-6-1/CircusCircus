@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ message.subject }} - {{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <h2>{{ message.subject }}</h2>
+        </div>
+        
+        <div class="content">
+            <div class="message-header">
+                <p><strong>From:</strong> {{ message.sender.username }}</p>
+                <p><strong>To:</strong> {{ message.recipient.username }}</p>
+                <p><strong>Sent:</strong> {{ message.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</p>
+            </div>
+            
+            <div class="message-body">
+                {{ message.body }}
+            </div>
+            
+            <div class="message-actions">
+                <a href="{{ url_for('messages.inbox') }}">← Back to Inbox</a>
+                <a href="{{ url_for('messages.delete_message', message_id=message.id) }}" 
+                   onclick="return confirm('Are you sure you want to delete this message?')">
+                   Delete
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

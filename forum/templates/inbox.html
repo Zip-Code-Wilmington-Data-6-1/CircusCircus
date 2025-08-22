@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inbox - {{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <h2>Inbox</h2>
+        </div>
+        
+        <div class="content">
+            <div class="navigation">
+                <a href="{{ url_for('messages.compose') }}">Compose New Message</a> | 
+                <a href="{{ url_for('messages.sent') }}">Sent Messages</a> | 
+                <a href="{{ url_for('index') }}">Back to Forum</a>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                <div class="message-item {% if not message.read %}unread{% endif %}">
+                    <h4>
+                        <a href="{{ url_for('messages.view_message', message_id=message.id) }}">
+                            {{ message.subject }}
+                        </a>
+                        {% if not message.read %}<span class="unread-indicator"> ●</span>{% endif %}
+                    </h4>
+                    <p><strong>From:</strong> {{ message.sender.username }}</p>
+                    <p><small>{{ message.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</small></p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No messages in your inbox.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

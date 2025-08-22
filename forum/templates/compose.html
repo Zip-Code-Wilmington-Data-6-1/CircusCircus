@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compose Message - {{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <h2>Compose New Message</h2>
+        </div>
+        
+        <div class="content">
+            <div class="navigation">
+                <a href="{{ url_for('messages.inbox') }}">Back to Inbox</a>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('messages.send_message') }}">
+                <div class="form-group">
+                    <label for="recipient_id">Send To:</label>
+                    <select name="recipient_id" id="recipient_id" required>
+                        <option value="">-- Select a user --</option>
+                        {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <input type="text" name="subject" id="subject" required maxlength="100">
+                </div>
+                
+                <div class="form-group">
+                    <label for="body">Message:</label>
+                    <textarea name="body" id="body" rows="8" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

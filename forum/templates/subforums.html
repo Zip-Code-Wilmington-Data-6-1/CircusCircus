@@ -15,4 +15,7 @@
 </div>
 </div>
 {% endfor %}
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('messages.inbox') }}">Messages</a>
+{% endif %}
 {% endblock %}

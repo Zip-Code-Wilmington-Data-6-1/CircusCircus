@@ -189,3 +189,131 @@
 .varwidth{
 	width: 50%;
 }
+
+/* Message-specific styles */
+.message-item {
+    padding: 1%;
+    border-bottom: 1px solid gray;
+    margin-bottom: 1%;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.message-item.unread {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.message-item h4 {
+    color: blue;
+    font-size: 15pt;
+    font-weight: bold;
+    margin: 0;
+}
+
+.message-item h4 a {
+    color: blue;
+    text-decoration: none;
+}
+
+.unread-indicator {
+    color: blue;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.message-header {
+    padding: 0.5%;
+    padding-left: 1%;
+    margin-bottom: 0.5%;
+    border: 1px solid black;
+    font-family: Verdana;
+    font-size: 15pt;
+}
+
+.message-body {
+    padding: 1%;
+    white-space: pre-line;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.message-actions {
+    margin-top: 1%;
+    padding-top: 1%;
+    border-top: 1px solid gray;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.message-actions a {
+    color: blue;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.form-group {
+    margin-top: 0.5%;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5%;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    padding: 0.25%;
+    margin-top: 0.5%;
+    font-family: Verdana;
+    font-size: 14pt;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn {
+    padding: 0.5%;
+    font-family: Verdana;
+    font-size: 14pt;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-top: 0.5%;
+}
+
+.navigation {
+    font-family: Verdana;
+    font-size: 14pt;
+    margin-bottom: 1%;
+}
+
+.navigation a {
+    color: blue;
+    text-decoration: none;
+}
+
+.read-status {
+    color: green;
+    font-family: Verdana;
+    font-size: 11pt;
+    font-style: italic;
+}
+
+.unread-status {
+    color: gray;
+    font-family: Verdana;
+    font-size: 11pt;
+    font-style: italic;
+}
+
+.alert {
+    color: red;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 14pt;
+    margin: 1%;
+}

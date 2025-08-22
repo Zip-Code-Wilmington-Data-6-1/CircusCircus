@@ -2,41 +2,41 @@
 <html>
 <head>
     <title>Sent Messages - {{ config.SITE_NAME }}</title>
-    <style>
-        .message-item { 
-            border: 1px solid #ddd; 
-            padding: 10px; 
-            margin: 5px 0; 
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Sent Messages</h2>
-    
-    <div class="navigation">
-        <a href="{{ url_for('messages.inbox') }}">Inbox</a> | 
-        <a href="{{ url_for('messages.compose') }}">Compose New Message</a>
-    </div>
+    <div class="page">
+        <div class="header">
+            <h2>Sent Messages</h2>
+        </div>
+        
+        <div class="content">
+            <div class="navigation">
+                <a href="{{ url_for('messages.inbox') }}">Inbox</a> | 
+                <a href="{{ url_for('messages.compose') }}">Compose New Message</a>
+            </div>
 
-    {% if messages %}
-        {% for message in messages %}
-        <div class="message-item">
-            <h4>
-                <a href="{{ url_for('messages.view_message', message_id=message.id) }}">
-                    {{ message.subject }}
-                </a>
-            </h4>
-            <p><strong>To:</strong> {{ message.recipient.username }}</p>
-            <p><small>{{ message.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</small></p>
-            {% if message.read %}
-                <p><small style="color: green;">✓ Read</small></p>
+            {% if messages %}
+                {% for message in messages %}
+                <div class="message-item">
+                    <h4>
+                        <a href="{{ url_for('messages.view_message', message_id=message.id) }}">
+                            {{ message.subject }}
+                        </a>
+                    </h4>
+                    <p><strong>To:</strong> {{ message.recipient.username }}</p>
+                    <p><small>{{ message.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</small></p>
+                    {% if message.read %}
+                        <p><small class="read-status">✓ Read</small></p>
+                    {% else %}
+                        <p><small class="unread-status">Unread</small></p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             {% else %}
-                <p><small style="color: gray;">Unread</small></p>
+                <p>You haven't sent any messages yet.</p>
             {% endif %}
         </div>
-        {% endfor %}
-    {% else %}
-        <p>You haven't sent any messages yet.</p>
-    {% endif %}
+    </div>
 </body>
 </html>

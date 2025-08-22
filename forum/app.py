@@ -7,6 +7,8 @@ from forum.reactions import reactions_bp
 from forum.comments import comments_bp
 from forum.auth import auth_bp
 from forum.messages import messages_bp  # Add this import
+from forum.filters import embed_media
+
 
 app = Flask(__name__)
 app.secret_key = 'replace-this-with-a-very-secret-key'
@@ -19,6 +21,7 @@ app.register_blueprint(reactions_bp)
 app.register_blueprint(comments_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(messages_bp)  # Add this line
+app.jinja_env.filters['embed_media'] = embed_media
 
 app.config['SITE_NAME'] = 'Schooner'
 app.config['SITE_DESCRIPTION'] = 'a schooner forum'

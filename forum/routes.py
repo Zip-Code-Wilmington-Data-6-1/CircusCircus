@@ -136,17 +136,33 @@ def action_post():
 	db.session.commit()
 	return redirect("/viewpost?post=" + str(post.id))
 
+
 @login_required
-@rt.route('/action_comment', methods=['POST', 'GET'])
-def action_comment():
-	post_id = int(request.args.get("post"))
-	post = Post.query.filter(Post.id == post_id).first()
-	if not post:
-		return error("That post does not exist!")
-	content = request.form['content']
-	postdate = datetime.datetime.now()
-	comment = Comment(content, postdate)
-	current_user.comments.append(comment)
-	post.comments.append(comment)
-	db.session.commit()
-	return redirect("/viewpost?post=" + str(post_id))
+@rt.route('/delete_post', methods=['POST'])
+def delete_post():
+    post_id = int(request.form.get('post_id'))
+    post = Post.query.get(post_id)
+    if not post:
+        return redirect('/')
+    # Only allow author or admin to delete
+    if not current_user.is_authenticated or (current_user.id != post.user.id and not current_user.admin):
+        return "Unauthorized", 403
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/')
+
+
+# @login_required
+# @rt.route('/action_comment', methods=['POST', 'GET'])
+# def action_comment():
+# 	post_id = int(request.args.get("post"))
+# 	post = Post.query.filter(Post.id == post_id).first()
+# 	if not post:
+# 		return error("That post does not exist!")
+# 	content = request.form['content']
+# 	postdate = datetime.datetime.now()
+# 	comment = Comment(content, postdate)
+# 	current_user.comments.append(comment)
+# 	post.comments.append(comment)
+# 	db.session.commit()
+# 	return redirect("/viewpost?post=" + str(post_id))

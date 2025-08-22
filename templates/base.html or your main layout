@@ -1,0 +1,30 @@
+<nav>
+    <!-- Your existing navigation -->
+    <a href="/messages">
+        Messages 
+        <span id="unread-count" class="badge" style="display: none;"></span>
+    </a>
+</nav>
+
+<script>
+// Update unread count in navbar
+async function updateUnreadCount() {
+    try {
+        const response = await fetch('/messages/unread-count');
+        const data = await response.json();
+        const badge = document.getElementById('unread-count');
+        if (data.count > 0) {
+            badge.textContent = data.count;
+            badge.style.display = 'inline';
+        } else {
+            badge.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error updating unread count:', error);
+    }
+}
+
+// Update every 30 seconds
+setInterval(updateUnreadCount, 30000);
+updateUnreadCount(); // Initial load
+</script>

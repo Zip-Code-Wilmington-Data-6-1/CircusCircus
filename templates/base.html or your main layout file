@@ -1,0 +1,38 @@
+<!-- Find your user welcome section and add the Messages link -->
+<div class="user-menu">
+    <span>Welcome, {{ current_user.username }}!</span>
+    <div class="dropdown">
+        <button class="dropdown-toggle">Menu</button>
+        <div class="dropdown-menu">
+            <a href="{{ url_for('auth.profile') }}">Profile</a>
+            <a href="{{ url_for('messages.messages_inbox') }}">
+                Messages 
+                <span id="unread-count" class="badge" style="display: none;"></span>
+            </a>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Update unread message count
+async function updateUnreadCount() {
+    try {
+        const response = await fetch('{{ url_for("messages.get_unread_count") }}');
+        const data = await response.json();
+        const badge = document.getElementById('unread-count');
+        if (data.count > 0) {
+            badge.textContent = data.count;
+            badge.style.display = 'inline';
+        } else {
+            badge.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error updating unread count:', error);
+    }
+}
+
+// Update every 30 seconds
+setInterval(updateUnreadCount, 30000);
+updateUnreadCount(); // Initial load
+</script>

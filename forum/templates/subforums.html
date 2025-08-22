@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block body%}
 <div class="toplevelinfo">
-	Top level subforums:
+    Top level subforums:
 </div>
 {% for subforum in subforums %}
 <div class="subforumlisting">
@@ -15,4 +15,10 @@
 </div>
 </div>
 {% endfor %}
+
 {% endblock %}
+
+@app.route('/')
+def index():
+    subforums = Subforum.query.filter(Subforum.parent_id == None).order_by(Subforum.id)
+    return render_template("subforums.html", subforums=subforums)

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Messages - {{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h2>Messages 
+                    {% if unread_count > 0 %}
+                    <span class="badge badge-primary">{{ unread_count }} unread</span>
+                    {% endif %}
+                </h2>
+                
+                <div class="mb-3">
+                    <button class="btn btn-primary" onclick="showNewMessageForm()">New Message</button>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('messages.messages_inbox') }}" class="btn btn-info">Messages</a>
+                    {% endif %}
+                </div>
+                
+                {% if conversations %}
+                <div class="list-group">
+                    {% for conv in conversations %}
+                    <div class="list-group-item {% if conv.unread_count > 0 %}list-group-item-warning{% endif %}">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Conversation with User {{ conv.other_user_id }}</h5>
+                            <small>{{ conv.last_message_time }}</small>
+                        </div>
+                        {% if conv.unread_count > 0 %}
+                        <span class="badge badge-primary">{{ conv.unread_count }} new</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <p>No messages yet. Send your first message using the button above!</p>
+                </div>
+                {% endif %}
+                
+                <!-- Simple New Message Form -->
+                <div id="newMessageForm" style="display: none;" class="mt-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Send New Message</h5>
+                        </div>
+                        <div class="card-body">
+                            <form onsubmit="sendMessage(event)">
+                                <div class="form-group">
+                                    <label for="receiverId">To (User ID):</label>
+                                    <input type="number" class="form-control" id="receiverId" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="messageContent">Message:</label>
+                                    <textarea class="form-control" id="messageContent" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                                <button type="button" class="btn btn-secondary" onclick="hideNewMessageForm()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function showNewMessageForm() {
+        document.getElementById('newMessageForm').style.display = 'block';
+    }
+    
+    function hideNewMessageForm() {
+        document.getElementById('newMessageForm').style.display = 'none';
+    }
+    
+    async function sendMessage(event) {
+        event.preventDefault();
+        
+        const receiverId = document.getElementById('receiverId').value;
+        const content = document.getElementById('messageContent').value;
+        
+        try {
+            const response = await fetch('/messages/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    receiver_id: parseInt(receiverId),
+                    content: content
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('Message sent successfully!');
+                location.reload();
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (error) {
+            alert('Failed to send message');
+        }
+    }
+    </script>
+</body>
+</html>

@@ -18,7 +18,7 @@ auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 def register():
     """User registration route"""
     if current_user.is_authenticated:
-        return redirect(url_for('routes.index', _external=False, _scheme=''))
+        return redirect(url_for('routes.index', _external=True, _scheme='http'))
     
     if request.method == 'POST':
         email = request.form.get('email', '').strip()
@@ -60,7 +60,7 @@ def register():
 def login():
     """User login route"""
     if current_user.is_authenticated:
-        return redirect(url_for('routes.index', _external=False, _scheme=''))
+        return redirect(url_for('routes.index', _external=True, _scheme='http'))
     
     if request.method == 'POST':
         username = request.form.get('username', '').strip()
@@ -95,7 +95,7 @@ def login():
             next_page = request.args.get('next')
             if next_page:
                 return redirect(next_page)
-            return redirect(url_for('routes.index', _external=False, _scheme=''))
+            return redirect(url_for('routes.index', _external=True, _scheme='http'))
         else:
             # Log failed attempt
             LoginAttempt.log_attempt(username, client_ip, False, user_agent)
@@ -112,7 +112,8 @@ def logout():
     """User logout route"""
     logout_user()
     flash('You have been logged out successfully.', 'info')
-    return redirect(url_for('routes.index', _external=False, _scheme=''))
+    # Change this line to redirect to an existing route
+    return redirect('/')  # Or use url_for with a route that actually exists
 
 
 @auth_bp.route('/profile')
@@ -192,7 +193,7 @@ def admin_toggle_user_active(user_id):
     """Admin route to activate/deactivate users"""
     if not current_user.admin:
         flash('Access denied.', 'error')
-        return redirect(url_for('routes.index', _external=False, _scheme=''))
+        return redirect(url_for('routes.index', _external=True, _scheme='http'))
     
     user = User.query.get_or_404(user_id)
     
@@ -216,7 +217,7 @@ def admin_toggle_user_admin(user_id):
     """Admin route to grant/revoke admin privileges"""
     if not current_user.admin:
         flash('Access denied.', 'error')
-        return redirect(url_for('routes.index', _external=False, _scheme=''))
+        return redirect(url_for('routes.index', _external=True, _scheme='http'))
     
     user = User.query.get_or_404(user_id)
     

@@ -48,14 +48,14 @@ def valid_profile_picture_url(url):
 	return url_regex.match(url)
 
 def username_taken(username):
-	return User.query.filter(User.username == username).first()
+	return User.query.filter_by(username=username).first()
 
 def email_taken(email):
-	return User.query.filter(User.email == email).first()
+	return User.query.filter_by(email=email).first()
 
 def get_user_by_username(username):
 	"""Get user by username"""
-	return User.query.filter(User.username == username).first()
+	return User.query.filter_by(username=username).first()
 
 def get_user_by_id(user_id):
 	"""Get user by ID"""

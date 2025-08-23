@@ -174,9 +174,10 @@
 .commentcontent{
 	display: inline;
 }
-.commenttime{
-	font-size: 11pt;
-	font-style: italic;
+.commenttime {
+    font-size: 11pt;
+    font-style: italic;
+    font-family: Verdana;
 }
 
 
@@ -316,4 +317,143 @@
     font-family: Verdana;
     font-size: 14pt;
     margin: 1%;
+    padding: 1%;
+    border: 1px solid red;
+}
+
+/* Settings styles - keep these and remove duplicates */
+.settings-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.settings-menu li {
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid black;  /* Changed to match forum theme */
+    background-color: #f9f9f9;
+    font-family: Verdana;  /* Added to match forum theme */
+    font-size: 14pt;       /* Added to match forum theme */
+}
+
+.settings-menu a {
+    text-decoration: none;
+    color: blue;           /* Changed to match forum theme */
+    font-weight: bold;
+}
+
+.settings-menu a:hover {
+    text-decoration: underline;
+}
+
+/* Keep only these form styles */
+.form-group {
+    margin-top: 0.5%;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5%;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    padding: 0.25%;
+    margin-top: 0.5%;
+    font-family: Verdana;
+    font-size: 14pt;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+    border: 1px solid black;  /* Match forum theme */
+}
+
+.form-actions {
+    margin-top: 20px;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-actions input[type="submit"] {
+    background-color: #f0f0f0;  /* Match forum theme */
+    color: black;               /* Match forum theme */
+    padding: 0.5%;
+    border: 1px solid black;    /* Match forum theme */
+    cursor: pointer;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-actions a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: blue;               /* Match forum theme */
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+/* Keep only this alert style */
+.alert {
+    color: red;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 14pt;
+    margin: 1%;
+    padding: 1%;
+    border: 1px solid red;
+}
+
+/* Additional settings styles to match forum theme */
+.container {
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid black;
+}
+
+.section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.section td {
+    padding: 8px;
+    border-bottom: 1px solid gray;
+}
+
+.actions {
+    margin-top: 20px;
+    padding: 10px 0;
+    border-top: 1px solid gray;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.actions a {
+    color: blue;
+    text-decoration: none;
+}
+
+.current-email {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid black;
+    margin: 10px 0;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-group small {
+    font-size: 11pt;
+    font-style: italic;
+    color: gray;
 }

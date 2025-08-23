@@ -8,6 +8,7 @@ from forum.comments import comments_bp
 from forum.auth import auth_bp
 from forum.messages import messages_bp  # Add this import
 from forum.filters import embed_media
+from forum.settings import settings_bp
 
 
 app = Flask(__name__)
@@ -22,6 +23,7 @@ app.register_blueprint(comments_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(messages_bp)  # Add this line
 app.jinja_env.filters['embed_media'] = embed_media
+app.register_blueprint(settings_bp)
 
 app.config['SITE_NAME'] = 'Schooner'
 app.config['SITE_DESCRIPTION'] = 'a schooner forum'

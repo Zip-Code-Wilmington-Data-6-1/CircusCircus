@@ -1,0 +1,41 @@
+/sai/Documents/Projects/seventh-week/CircusCircus/forum/templates/settings/change_email.html
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="container">
+    <h1>Change Email Address</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="current-email">
+        <p><strong>Current Email:</strong> {{ current_user.email }}</p>
+    </div>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="new_email">New Email Address:</label>
+            <input type="email" id="new_email" name="new_email" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Confirm Password:</label>
+            <input type="password" id="password" name="password" required>
+            <small>Enter your current password to confirm this change</small>
+        </div>
+        
+        <div class="form-actions">
+            <input type="submit" value="Change Email">
+            <a href="{{ url_for('settings.index') }}">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

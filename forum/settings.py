@@ -9,7 +9,7 @@ settings_bp = Blueprint('settings', __name__, url_prefix='/settings')
 @login_required
 def index():
     """Display user settings dashboard"""
-    return render_template('settings/index.html', user=current_user)
+    return render_template('settings/settings_index.html', user=current_user)
 
 @settings_bp.route('/profile')
 @login_required

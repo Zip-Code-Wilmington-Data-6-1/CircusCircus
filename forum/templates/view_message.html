@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>{{ message.subject }} - {{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>

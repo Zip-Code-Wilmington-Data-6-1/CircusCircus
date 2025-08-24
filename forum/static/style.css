@@ -20,7 +20,8 @@
 	margin-bottom: none;
 }
 .content{
-	margin-top: 0.5%;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
 }
 .login{
 	width: 25%;
@@ -111,6 +112,9 @@
 }
 .noposts{
 	padding: 1%;
+	color: #888;
+	font-style: italic;
+	margin: 1.5rem 0;
 }
 .subsubforums{
 	border: 1px solid black;
@@ -146,6 +150,8 @@
 }
 .postcontent{
 	padding: 1%;
+	font-size: 1.1rem;
+	line-height: 1.6;
 }
 .postposter{
 	font-size: 12pt;
@@ -154,7 +160,8 @@
 }
 .posttime{
 	font-style: italic;
-	font-size: 11pt;
+	font-size: 0.95rem;
+	color: #888;
 }
 .whitespace{
 	white-space: pre-line;
@@ -170,13 +177,17 @@
 .commentuser{
 	display: inline;
 	font-weight: bold;
+	font-size: 1.1rem;
 }
 .commentcontent{
 	display: inline;
+	font-size: 1.1rem;
+	line-height: 1.6;
 }
 .commenttime {
-    font-size: 11pt;
+    font-size: 0.95rem;
     font-style: italic;
+    color: #888;
     font-family: Verdana;
 }
 
@@ -319,6 +330,8 @@
     margin: 1%;
     padding: 1%;
     border: 1px solid red;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Settings styles - keep these and remove duplicates */
@@ -456,4 +469,32 @@
     font-size: 11pt;
     font-style: italic;
     color: gray;
+}
+
+/* Use Bootstrap classes in your HTML for layout, tables, buttons, alerts, etc. */
+
+/* Footer styling */
+.footer {
+    background: #f8f9fa;
+    padding: 1.25rem 0;
+    border-top: 1px solid #e7e7e7;
+    color: #888;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    .content {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .header {
+        margin-bottom: 0.5rem;
+    }
+    .footer {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+    }
 }

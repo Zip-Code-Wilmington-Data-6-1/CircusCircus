@@ -166,3 +166,7 @@ def delete_post():
 # 	post.comments.append(comment)
 # 	db.session.commit()
 # 	return redirect("/viewpost?post=" + str(post_id))
+
+@rt.route('/about')
+def about():
+    return render_template("about.html")

@@ -9,6 +9,7 @@ from forum.auth import auth_bp
 from forum.messages import messages_bp  # Add this import
 from forum.filters import embed_media
 from forum.settings import settings_bp
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -71,6 +72,10 @@ with app.app_context():
 def index():
     subforums = Subforum.query.filter(Subforum.parent_id == None).order_by(Subforum.id)
     return render_template("subforums.html", subforums=subforums)
+
+@app.context_processor
+def inject_now():
+    return {'current_year': datetime.now().year}
 
 
 

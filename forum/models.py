@@ -10,9 +10,9 @@ db = SQLAlchemy()
 #OBJECT MODELS
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.Text, unique=True)
-    password_hash = db.Column(db.Text)
-    email = db.Column(db.Text, unique=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.Text, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
     admin = db.Column(db.Boolean, default=False)
     posts = db.relationship("Post", backref="user")
     comments = db.relationship("Comment", backref="user")
@@ -96,7 +96,7 @@ class Post(db.Model):
 
 class Subforum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.Text, unique=True)
+    title = db.Column(db.String(120), unique=True, nullable=False)
     description = db.Column(db.Text)
     subforums = db.relationship("Subforum")
     parent_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
@@ -146,18 +146,18 @@ def error(errormessage):
 	return "<b style=\"color: red;\">" + errormessage + "</b>"
 
 def generateLinkPath(subforumid):
-	links = []
-	subforum = Subforum.query.filter(Subforum.id == subforumid).first()
-	parent = Subforum.query.filter(Subforum.id == subforum.parent_id).first()
-	links.append("<a href=\"/subforum?sub=" + str(subforum.id) + "\">" + subforum.title + "</a>")
-	while parent is not None:
-		links.append("<a href=\"/subforum?sub=" + str(parent.id) + "\">" + parent.title + "</a>")
-		parent = Subforum.query.filter(Subforum.id == parent.parent_id).first()
-	links.append("<a href=\"/\">Forum Index</a>")
-	link = ""
-	for l in reversed(links):
-		link = link + " / " + l
-	return link
+    links = []
+    subforum = Subforum.query.filter(Subforum.id == subforumid).first()
+    parent = Subforum.query.filter(Subforum.id == subforum.parent_id).first()
+    links.append("<a href=\"/subforum?sub=" + str(subforum.id) + "\">" + subforum.title + "</a>")
+    while parent is not None:
+        links.append("<a href=\"/subforum?sub=" + str(parent.id) + "\">" + parent.title + "</a>")
+        parent = Subforum.query.filter(Subforum.id == parent.parent_id).first()
+    links.append("<a href=\"/\">Forum Index</a>")
+    link = ""
+    for l in reversed(links):
+        link = link + " / " + l
+    return link
 
 
 #Post checks

@@ -21,9 +21,22 @@ class User(UserMixin, db.Model):
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
+    
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+    def get_post_count(self):
+        return len(self.posts)
+    
+    def get_comment_count(self):
+        return len(self.comments)
+    
+    def update_password(self, new_password):
+        self.password_hash = generate_password_hash(new_password)
+    
+    def update_email(self, new_email):
+        self.email = new_email
+
 #messages model
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)

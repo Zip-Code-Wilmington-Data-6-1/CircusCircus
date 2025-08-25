@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="container">
+    <h1>Account Information</h1>
+    
+    <div class="account-details">
+        <div class="section">
+            <h2>Account Overview</h2>
+            <table>
+                <tr>
+                    <td><strong>User ID:</strong></td>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Username:</strong></td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Email:</strong></td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Account Type:</strong></td>
+                    <td>{{ 'Administrator' if user.admin else 'Regular User' }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>Activity Summary</h2>
+            <table>
+                <tr>
+                    <td><strong>Total Posts:</strong></td>
+                    <td>{{ post_count }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Comments:</strong></td>
+                    <td>{{ comment_count }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Contributions:</strong></td>
+                    <td>{{ post_count + comment_count }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="actions">
+        <a href="{{ url_for('settings.index') }}">Back to Settings</a> |
+        <a href="{{ url_for('index') }}">Back to Forum</a>
+    </div>
+</div>
+
+
+{% endblock %}

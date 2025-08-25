@@ -20,7 +20,8 @@
 	margin-bottom: none;
 }
 .content{
-	margin-top: 0.5%;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
 }
 .login{
 	width: 25%;
@@ -111,6 +112,9 @@
 }
 .noposts{
 	padding: 1%;
+	color: #888;
+	font-style: italic;
+	margin: 1.5rem 0;
 }
 .subsubforums{
 	border: 1px solid black;
@@ -146,6 +150,8 @@
 }
 .postcontent{
 	padding: 1%;
+	font-size: 1.1rem;
+	line-height: 1.6;
 }
 .postposter{
 	font-size: 12pt;
@@ -154,7 +160,8 @@
 }
 .posttime{
 	font-style: italic;
-	font-size: 11pt;
+	font-size: 0.95rem;
+	color: #888;
 }
 .whitespace{
 	white-space: pre-line;
@@ -170,13 +177,18 @@
 .commentuser{
 	display: inline;
 	font-weight: bold;
+	font-size: 1.1rem;
 }
 .commentcontent{
 	display: inline;
+	font-size: 1.1rem;
+	line-height: 1.6;
 }
-.commenttime{
-	font-size: 11pt;
-	font-style: italic;
+.commenttime {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: #888;
+    font-family: Verdana;
 }
 
 
@@ -316,4 +328,173 @@
     font-family: Verdana;
     font-size: 14pt;
     margin: 1%;
+    padding: 1%;
+    border: 1px solid red;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Settings styles - keep these and remove duplicates */
+.settings-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.settings-menu li {
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid black;  /* Changed to match forum theme */
+    background-color: #f9f9f9;
+    font-family: Verdana;  /* Added to match forum theme */
+    font-size: 14pt;       /* Added to match forum theme */
+}
+
+.settings-menu a {
+    text-decoration: none;
+    color: blue;           /* Changed to match forum theme */
+    font-weight: bold;
+}
+
+.settings-menu a:hover {
+    text-decoration: underline;
+}
+
+/* Keep only these form styles */
+.form-group {
+    margin-top: 0.5%;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5%;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    padding: 0.25%;
+    margin-top: 0.5%;
+    font-family: Verdana;
+    font-size: 14pt;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+    border: 1px solid black;  /* Match forum theme */
+}
+
+.form-actions {
+    margin-top: 20px;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-actions input[type="submit"] {
+    background-color: #f0f0f0;  /* Match forum theme */
+    color: black;               /* Match forum theme */
+    padding: 0.5%;
+    border: 1px solid black;    /* Match forum theme */
+    cursor: pointer;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-actions a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: blue;               /* Match forum theme */
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+/* Keep only this alert style */
+.alert {
+    color: red;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 14pt;
+    margin: 1%;
+    padding: 1%;
+    border: 1px solid red;
+}
+
+/* Additional settings styles to match forum theme */
+.container {
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid black;
+}
+
+.section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.section td {
+    padding: 8px;
+    border-bottom: 1px solid gray;
+}
+
+.actions {
+    margin-top: 20px;
+    padding: 10px 0;
+    border-top: 1px solid gray;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.actions a {
+    color: blue;
+    text-decoration: none;
+}
+
+.current-email {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid black;
+    margin: 10px 0;
+    font-family: Verdana;
+    font-size: 14pt;
+}
+
+.form-group small {
+    font-size: 11pt;
+    font-style: italic;
+    color: gray;
+}
+
+/* Use Bootstrap classes in your HTML for layout, tables, buttons, alerts, etc. */
+
+/* Footer styling */
+.footer {
+    background: #f8f9fa;
+    padding: 1.25rem 0;
+    border-top: 1px solid #e7e7e7;
+    color: #888;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    .content {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .header {
+        margin-bottom: 0.5rem;
+    }
+    .footer {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+    }
 }

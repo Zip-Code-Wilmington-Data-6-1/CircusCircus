@@ -8,7 +8,13 @@ from forum.comments import comments_bp
 from forum.auth import auth_bp
 from forum.messages import messages_bp
 from forum.filters import embed_media
+
+from forum.settings import settings_bp
+from datetime import datetime
+
+
 from config import Config
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -22,6 +28,7 @@ app.register_blueprint(comments_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(messages_bp)
 app.jinja_env.filters['embed_media'] = embed_media
+app.register_blueprint(settings_bp)
 
 app.config['SITE_NAME'] = 'Schooner'
 app.config['SITE_DESCRIPTION'] = 'a schooner forum'
@@ -68,6 +75,10 @@ with app.app_context():
 def index():
     subforums = Subforum.query.filter(Subforum.parent_id == None).order_by(Subforum.id)
     return render_template("subforums.html", subforums=subforums)
+
+@app.context_processor
+def inject_now():
+    return {'current_year': datetime.now().year}
 
 
 

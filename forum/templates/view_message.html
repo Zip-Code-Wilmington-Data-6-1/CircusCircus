@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>{{ message.subject }} - {{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -30,5 +31,13 @@
             </div>
         </div>
     </div>
+    <footer class="footer">
+    <nav>
+        <a href="{{ url_for('routes.about') }}">About</a>
+    </nav>
+    <div style="margin-top: 0.5em; font-size: 0.9em; color: #888;">
+        &copy; {{ config.SITE_NAME }} {{ current_year if current_year else "2025" }}. All rights reserved.
+    </div>
+</footer>
 </body>
 </html>

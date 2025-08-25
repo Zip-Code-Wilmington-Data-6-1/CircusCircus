@@ -6,15 +6,19 @@ from forum.routes import rt
 from forum.reactions import reactions_bp
 from forum.comments import comments_bp
 from forum.auth import auth_bp
-from forum.messages import messages_bp  # Add this import
+from forum.messages import messages_bp
 from forum.filters import embed_media
+
 from forum.settings import settings_bp
 from datetime import datetime
 
 
+from config import Config
+
+
 app = Flask(__name__)
-app.secret_key = 'replace-this-with-a-very-secret-key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/circuscircus.db'
+app.config.from_object(Config)
+app.secret_key = app.config['SECRET_KEY']
 db.init_app(app)
 
 app.register_blueprint(posts_bp)
@@ -22,7 +26,7 @@ app.register_blueprint(rt)
 app.register_blueprint(reactions_bp)
 app.register_blueprint(comments_bp)
 app.register_blueprint(auth_bp)
-app.register_blueprint(messages_bp)  # Add this line
+app.register_blueprint(messages_bp)
 app.jinja_env.filters['embed_media'] = embed_media
 app.register_blueprint(settings_bp)
 
@@ -63,10 +67,9 @@ def load_user(userid):
     return User.query.get(userid)
 
 with app.app_context():
-	db.create_all()
-	if not Subforum.query.all():
-		init_site()
-
+    db.create_all()
+    if not Subforum.query.all():
+        init_site()
 
 @app.route('/')
 def index():

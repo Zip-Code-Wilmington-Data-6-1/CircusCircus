@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="postcontent">
-		{{ post.content | embed_media }}
+		{{ rendered_content | embed_media }}
 	</div>
 	{% if current_user.is_authenticated and (current_user.id == post.user.id or current_user.admin) %}
     <form action="/delete_post" method="POST" style="display:inline;">
@@ -58,7 +58,7 @@
 			(<span  {% if comment.user.admin %} style="color: red;" {% endif %}>{{ comment.user.username }}</span>) - 
 		</div>
 		<div class="commentcontent">
-			{{ comment.content | embed_media }}
+			{{  comment.content | embed_media }}
 		</div>
 		
 		<div class="commenttime">

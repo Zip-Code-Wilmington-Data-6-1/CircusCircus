@@ -8,4 +8,4 @@ MarkupSafe
 SQLAlchemy
 Werkzeug
 wheel
-honcho
+honchocryptography==45.0.6
